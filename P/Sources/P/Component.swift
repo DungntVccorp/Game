@@ -22,8 +22,14 @@ public enum ComponentType{
 
 open class Component{
     public init() { }
+    
+    var componentName : String{
+        return NSStringFromClass(type(of: self))
+    }
+    
+    
     open func loadConfig() throws{
-        print("Root Load Config")
+        print("Root Load Config \(componentName)")
     }
     open func start() throws{
         

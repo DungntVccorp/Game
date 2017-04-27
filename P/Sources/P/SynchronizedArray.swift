@@ -9,7 +9,7 @@
 import Foundation
 public class SynchronizedArray<T> {
     
-    private var array: [T] = []
+    private var array: Array<T> = Array<T>()
     
     private let accessQueue = DispatchQueue(label: "SynchronizedArrayAccess", attributes: .concurrent)
     

@@ -4,6 +4,11 @@ import Foundation
 
 public class GameEngine{
     
+    //MARK: - 💤 LazyLoad Method
+    private var tcp : Tcp!
+    
+    
+    
     static let sharedInstance: GameEngine = GameEngine()
     public init() {
         print("Start")
@@ -15,21 +20,27 @@ public class GameEngine{
         listComponent.append(newElement: component)
     }
     
-    public func startEngine(){
+    public func startEngine() throws {
         //for com in listComponent
-        
-        for component in (listComponent.allObject() ?? []).sorted(by: { (c1, c2) -> Bool in
-            return c1.priority() >= c2.priority()
-        }){
-            do{
+        do{
+            for component in (listComponent.allObject() ?? []).sorted(by: { (c1, c2) -> Bool in
+                return c1.priority() >= c2.priority()
+            }){
                 try component.loadConfig()
                 try component.start()
-            }catch{
-                debugPrint(error.localizedDescription)
             }
             
+            
+            debugPrint("Start Tcp")
+            
+            tcp = Tcp(self)
+            tcp.startTcp()
+            
+            
+            
+        }catch{
+            throw error
         }
-        
     }
     
     
