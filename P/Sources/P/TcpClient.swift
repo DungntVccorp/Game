@@ -10,17 +10,16 @@ import Foundation
 import Socket
 
 protocol clientSocketDelegate {
-    func clientDidDisconect(client : tcpClient)
-    func clientUnknowError(client: tcpClient,err : Error)
+    func clientDidDisconect(client : TcpClient)
+    func clientUnknowError(client: TcpClient,err : Error)
 }
 
-class tcpClient {
+class TcpClient {
     
-    private var socket : Socket!
+    var socket : Socket!
     
     private let queue = DispatchQueue.global(qos: .default)
     private let bufferSize = 4096
-    let uuid : String = UUID().uuidString
     var delegate : clientSocketDelegate!
     init() {}
     convenience init(client : Socket,delegate : clientSocketDelegate? = nil) {
@@ -33,9 +32,6 @@ class tcpClient {
     }
     
     func run(){
-        
-        DispatchQueue.global(qos: DispatchQoS.QoSClass.default)
-        
         queue.async { [unowned self] in
             do{
                 var readData = Data()
@@ -43,14 +39,17 @@ class tcpClient {
                 repeat {
                     let bytesRead = try self.socket.read(into: &readData)
                     if(bytesRead > 0){
-                        debugPrint("Did Read \(bytesRead) byte")
+                        
+                        debugPrint("Did Read \(bytesRead) byte form client \(self.socket.socketfd)")
+
+                        
                     }
                     if bytesRead == 0{
                         shouldKeepRunning = false
                     }
                 }while shouldKeepRunning
                 readData.count = 0
-                debugPrint("Client \(self.uuid) Did Disconect")
+                debugPrint("Client \(self.socket.socketfd) Did Disconect")
                 if(self.delegate != nil){
                     self.delegate.clientDidDisconect(client: self)
                 }

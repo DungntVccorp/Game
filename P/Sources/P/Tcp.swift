@@ -15,23 +15,24 @@ public enum TcpError : Error {
     case Unable_to_unwrap_socket
 }
 
-class Tcp : clientSocketDelegate {
+class Tcp {
     
     
     //MARK: - 💤 LazyLoad Method
-    private var parentController : GameEngine!
+    private var parentController : GameServer!
     private var tcpSocket : Socket!
     private var queue : DispatchQueue!
-    private var listConnection : SynchronizedArray = SynchronizedArray<tcpClient>()
+    
     
     
     lazy var isContinueRunning: Bool = {
         let continueRunning : Bool = true
         return continueRunning
     }()
+    
     init() { }
     
-    convenience init(_ engine : GameEngine){
+    convenience init(_ engine : GameServer){
         self.init()
         parentController = engine
     }
@@ -46,9 +47,9 @@ class Tcp : clientSocketDelegate {
                 debugPrint("Listening on port: \(self.tcpSocket.listeningPort)")
                 repeat{
                     let newClientConnect = try self.tcpSocket.acceptClientConnection()
-                    let client  = tcpClient(client: newClientConnect,delegate: self)
-                    self.listConnection.append(newElement:client)
-                    debugPrint("Client \(client.uuid) Did Connect")
+                    let client  = TcpClient(client: newClientConnect,delegate: self.parentController)
+                    self.parentController.clientDidConnect(client)
+                    debugPrint("Client \(client.socket.socketfd) Did Connect")
                 }while self.isContinueRunning
             }
             catch {
@@ -60,27 +61,5 @@ class Tcp : clientSocketDelegate {
     
     
     
-    //MARK: - 🔌 clientSocketDelegate Method
-    func clientDidDisconect(client: tcpClient) {
-        guard let listConnect = self.listConnection.allObject() else { return }
-        var index : Int = 0
-        for c in listConnect{
-            if(c.uuid == client.uuid){
-                self.listConnection.removeAtIndex(index: index)
-                break
-            }
-            index = index + 1
-        }
-    }
-    func clientUnknowError(client: tcpClient, err: Error) {
-        guard let listConnect = self.listConnection.allObject() else { return }
-        var index : Int = 0
-        for c in listConnect{
-            if(c.uuid == client.uuid){
-                self.listConnection.removeAtIndex(index: index)
-                break
-            }
-            index = index + 1
-        }
-    }
+    
 }

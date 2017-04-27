@@ -9,7 +9,7 @@
 import Foundation
 
 class DatabaseManager : Component{
-    override public func start() throws {
-        debugPrint("Database Start")
+    override public func ComponentType() -> ComponentType {
+        return .Database
     }
 }

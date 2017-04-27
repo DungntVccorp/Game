@@ -7,16 +7,14 @@
 //
 
 import Foundation
-public enum ComponentType{
-    case None
-    case Tcp
-    case Http
+public enum ComponentType : Int{
+    case Operations = 0
     case Database
-    case logger
     case Session
-    case Operations
-    case Event
     case Service
+    case logger
+    case GS
+    case None
     
 }
 
@@ -27,17 +25,11 @@ open class Component{
         return NSStringFromClass(type(of: self))
     }
     
-    
-    open func loadConfig() throws{
-        print("Root Load Config \(componentName)")
-    }
-    open func start() throws{
-        
-    }
-    open func stop() {
-    }
-    open func priority() -> Int{
-        return 1000
+    open func loadConfig() throws{ }
+    open func start() throws{ }
+    open func stop() { }
+    func priority() -> Int{
+        return ComponentType().rawValue
     }
     open func ComponentType() -> ComponentType{
         return .None

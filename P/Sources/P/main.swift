@@ -7,7 +7,6 @@ GameEngine.sharedInstance.registerComponent(component: GameServer())
 do{
     try GameEngine.sharedInstance.startEngine()
     RunLoop.current.run()
-
 }catch{
     debugPrint(error.localizedDescription)
 }
