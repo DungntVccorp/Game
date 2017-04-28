@@ -9,6 +9,10 @@
 import Foundation
 
 open class ConcurrentOperation :  Operation{
+    
+    
+    
+    
     enum State {
         case ready
         case executing
@@ -75,8 +79,9 @@ open class ConcurrentOperation :  Operation{
             state = .executing
         }
         state = .finished
+        
     }
     deinit {
-        debugPrint("END OP")
+        debugPrint("Finish Operation")
     }
 }

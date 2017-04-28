@@ -34,15 +34,13 @@ class TcpClient {
     func run(){
         queue.async { [unowned self] in
             do{
+                
                 var readData = Data()
                 var shouldKeepRunning : Bool = true
                 repeat {
                     let bytesRead = try self.socket.read(into: &readData)
                     if(bytesRead > 0){
-                        
                         debugPrint("Did Read \(bytesRead) byte form client \(self.socket.socketfd)")
-                        OperationManager.instance()?.enqueue(operation: ConcurrentOperation())
-                        
                     }
                     if bytesRead == 0{
                         shouldKeepRunning = false
@@ -61,6 +59,19 @@ class TcpClient {
             }
         }
     }
+    
+    func sendMessage(_ data : Data) throws -> Int{
+        if self.socket.isConnected {
+            do{
+                return try self.socket.write(from: data)
+            }catch{
+                throw error
+            }
+        }else{
+            return -1
+        }
+    }
+    
     deinit{
         debugPrint("deinit client")
     }

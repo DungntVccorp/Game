@@ -12,6 +12,11 @@ import Foundation
 public class GameServer : Component,clientSocketDelegate{
     
     
+    class func instance() -> GameServer?{
+        return GameEngine.sharedInstance.getComponent(.GS) as? GameServer
+    }
+    
+    
     private var listConnection : SynchronizedArray = SynchronizedArray<TcpClient>()
     
     
@@ -20,6 +25,8 @@ public class GameServer : Component,clientSocketDelegate{
     }
     
     override public func start() throws {
+        
+        
     }
     
     

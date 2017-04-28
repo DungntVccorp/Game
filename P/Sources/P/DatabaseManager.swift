@@ -18,7 +18,7 @@ public enum dbError : Error{
 
 class DatabaseManager : Component{
     
-    private var database : Redis!
+    var database : Redis!
     
     var isReady : Bool = false
     
@@ -52,6 +52,9 @@ class DatabaseManager : Component{
             }
         }
     }
+    
+    
+    
     
     
     
