@@ -20,8 +20,9 @@ class OperationManager : Component{
     }
     
     override public func loadConfig() throws {
-        operationQueue.maxConcurrentOperationCount = OperationQueue.defaultMaxConcurrentOperationCount
+        operationQueue.maxConcurrentOperationCount = 10//OperationQueue.defaultMaxConcurrentOperationCount
         operationQueue.qualityOfService = .default
+        
     }
     override public func stop() {
         operationQueue.cancelAllOperations()
@@ -29,10 +30,10 @@ class OperationManager : Component{
     }
     override public func start() throws {
     }
-    func enqueue(operation:BaseOperation) {
+    func enqueue(operation:ConcurrentOperation) {
         self.operationQueue.addOperation(operation)
     }
-    func dequeue(operation:BaseOperation) {
+    func dequeue(operation:ConcurrentOperation) {
         for op in self.operationQueue.operations {
             if op == operation {
                 operation.cancel()

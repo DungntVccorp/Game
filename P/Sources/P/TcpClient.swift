@@ -41,7 +41,7 @@ class TcpClient {
                     if(bytesRead > 0){
                         
                         debugPrint("Did Read \(bytesRead) byte form client \(self.socket.socketfd)")
-
+                        OperationManager.instance()?.enqueue(operation: ConcurrentOperation())
                         
                     }
                     if bytesRead == 0{

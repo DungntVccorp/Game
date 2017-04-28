@@ -28,8 +28,6 @@ public class GameServer : Component,clientSocketDelegate{
     
     func clientDidConnect( _ tcpClient : TcpClient){
         listConnection.append(newElement: tcpClient)
-        
-        
     }
     
     //MARK: - 🔌 clientSocketDelegate Method

@@ -47,9 +47,6 @@ public class GameEngine{
                     break
                 }
             }
-            
-            
-            
         }catch{
             throw error
         }

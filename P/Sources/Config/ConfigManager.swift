@@ -32,12 +32,15 @@ public class ConfigManager{
     }
     public var getUdpPort : Int {
         return 4445
+    }    
+    public var dbHost : String{
+        return "localhost"
     }
-    public var getDbHost : String{
-        return "127.0.0.1"
+    public var dbPort : Int {
+        return 6379
     }
-    public var getDbPassword : String{
-        return ""
+    public var dbPassword : String{
+        return "password123"
     }
     
 }
