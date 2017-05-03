@@ -8,10 +8,11 @@
 
 import Foundation
 
+protocol ConcurrentOperationDelegate {
+    func finishOperation(_ type : Int,_ replyMsg : GSProtocolMessage?,_ client : TcpClient)
+}
+
 open class ConcurrentOperation :  Operation{
-    
-    
-    
     
     enum State {
         case ready
@@ -42,9 +43,21 @@ open class ConcurrentOperation :  Operation{
         }
     }
     
+    
+    private var delegate : ConcurrentOperationDelegate!
+    var clientExcute : TcpClient!
+    var excuteMessage : GSProtocolMessage!
     override init() {
         state = .ready
         super.init()
+    }
+    convenience init(_ delegate : ConcurrentOperationDelegate?,_ client : TcpClient,_ msg : GSProtocolMessage) {
+        self.init()
+        if(delegate != nil){
+            self.delegate = delegate!
+        }
+        self.clientExcute = client
+        self.excuteMessage = msg
     }
     
     // MARK: - NSOperation
@@ -72,13 +85,24 @@ open class ConcurrentOperation :  Operation{
             main()
         }
     }
+    
+    open func TcpExcute() -> (Int,replyMsg : GSProtocolMessage?){
+        return (0,nil)
+    }
+    
     override open func main() {
         if self.isCancelled {
             state = .finished
         }else{
             state = .executing
+            debugPrint("Run OP \(excuteMessage.headCodeId) : \(excuteMessage.subCodeId)")
+            let ex = self.TcpExcute()
+            if(self.delegate != nil){
+                self.delegate.finishOperation(ex.0,ex.1,self.clientExcute)
+            }
+            state = .finished
+
         }
-        state = .finished
         
     }
     deinit {

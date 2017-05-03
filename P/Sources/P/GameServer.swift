@@ -9,7 +9,7 @@
 import Foundation
 
 
-public class GameServer : Component,clientSocketDelegate{
+public class GameServer : Component,clientSocketDelegate,ConcurrentOperationDelegate{
     
     
     class func instance() -> GameServer?{
@@ -18,7 +18,7 @@ public class GameServer : Component,clientSocketDelegate{
     
     
     private var listConnection : SynchronizedArray = SynchronizedArray<TcpClient>()
-    
+    private var totalByteSend : Int = 0
     
     override public func ComponentType() -> ComponentType {
         return .GS
@@ -60,19 +60,14 @@ public class GameServer : Component,clientSocketDelegate{
             index = index + 1
         }
     }
-<<<<<<< HEAD
-    func didReceiveMessage(msg: GSMessage, client: TcpClient) {
-        
-=======
-    func didReceiveRequest(_ message: GSProtocolMessage) {
-        switch message.headCodeID {
+    func didReceiveMessage(msg: GSProtocolMessage, client: TcpClient) {
+        switch msg.headCodeId {
         case GSProtocolMessageType.headCode.profile:
-            switch message.subCodeID {
+            switch msg.subCodeId {
             case GSProtocolMessageType.subCode.profile_KeepAlive:
-                OperationManager.instance()?.dequeue(operation: ConcurrentOperation())
+                OperationManager.instance()?.enqueue(operation: OperationKeepAlive(self, client, msg))
                 break
             case GSProtocolMessageType.subCode.profile_login:
-                OperationManager.instance()?.dequeue(operation: ConcurrentOperation())
                 break
             default:
                 break
@@ -80,7 +75,17 @@ public class GameServer : Component,clientSocketDelegate{
         default:
             break
         }
->>>>>>> 87f0da7ed5e47fb7ae8fce0053aeaa04b3ecc3b1
+    }
+    
+    
+    func finishOperation(_ type: Int, _ replyMsg: GSProtocolMessage?, _ client: TcpClient) {
+        do{
+            guard let data = try replyMsg?.data() else { return }
+            totalByteSend = totalByteSend + (try client.sendMessage(data))
+            debugPrint("\(totalByteSend / 1024)Kb")
+        }catch{
+            debugPrint(error.localizedDescription)
+        }
     }
 }
 
