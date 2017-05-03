@@ -17,6 +17,7 @@ import Gzip
 public enum GSMessageError: Error {
     case invalidData
     case invalidInput
+    case invalidMessageSize
 }
 
 
@@ -30,7 +31,7 @@ public class GSMessage{
     var messageId                       : Int32 = 0
     var totalMessageSize                : Int32 = 0
     var protoContent                    : Data?
-    
+    var isNext                        : Bool = false
     public init() {
         
     }
@@ -66,7 +67,11 @@ public class GSMessage{
         
         
         guard rawData.count >= Int(totalMessageSize)  else{
-            throw GSMessageError.invalidData
+            throw GSMessageError.invalidMessageSize
+        }
+        
+        if(rawData.count > Int(totalMessageSize)){
+            isNext = true
         }
         
         var content = rawData.subdata(in: Int(3 + idByteSize + payloadByteSize) ..< rawData.count)
@@ -194,10 +199,8 @@ public class GSMessage{
             rawData.append(content!)
         }
         return rawData
-        
-        
-        
-        
-        
+    }
+    deinit {
+        debugPrint("Deinit GSMessage")
     }
 }

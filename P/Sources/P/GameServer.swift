@@ -60,6 +60,9 @@ public class GameServer : Component,clientSocketDelegate{
             index = index + 1
         }
     }
+    func didReceiveMessage(msg: GSMessage, client: TcpClient) {
+        
+    }
 }
 
 

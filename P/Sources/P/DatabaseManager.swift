@@ -19,7 +19,7 @@ public enum dbError : Error{
 class DatabaseManager : Component{
     
     var database : Redis!
-    
+    var timerPing : Timer!
     var isReady : Bool = false
     
     class func instance() -> DatabaseManager?{
@@ -35,6 +35,7 @@ class DatabaseManager : Component{
             throw dbError.invalid_config
         }
         database = Redis()
+        //redis-server --requirepass password123
     }
     override public func start() throws {
         database.connect(host: ConfigManager.sharedInstance.dbHost, port: Int32(ConfigManager.sharedInstance.dbPort)) { (err) in
