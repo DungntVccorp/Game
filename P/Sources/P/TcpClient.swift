@@ -46,17 +46,16 @@ class TcpClient {
                         while next
                         {
                             do{
-                                let msg = try GSProtocolMessage(rawData: Data(bytes: [238,238,0,17,5]))
+                                let msg = try GSProtocolMessage(rawData: bufferData)
                                 if(self.delegate != nil){
                                     self.delegate.didReceiveMessage(msg:msg, client: self)
                                 }
-                                next = false
-//                                next =  msg.isNext
-//                                if next {
-//                                    self.queue.sync {
-//                                        bufferData = bufferData.subdata(in: Int(msg.totalMessageSize)..<bufferData.count)
-//                                    }
-//                                }
+                                next =  msg.isNext
+                                if next {
+                                    self.queue.sync {
+                                        bufferData = bufferData.subdata(in: Int(msg.totalMessageSize)..<bufferData.count)
+                                    }
+                                }
                             }catch{
                                 next = false
                                 bufferData.count = 0
