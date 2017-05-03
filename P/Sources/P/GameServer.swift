@@ -60,8 +60,27 @@ public class GameServer : Component,clientSocketDelegate{
             index = index + 1
         }
     }
+<<<<<<< HEAD
     func didReceiveMessage(msg: GSMessage, client: TcpClient) {
         
+=======
+    func didReceiveRequest(_ message: GSProtocolMessage) {
+        switch message.headCodeID {
+        case GSProtocolMessageType.headCode.profile:
+            switch message.subCodeID {
+            case GSProtocolMessageType.subCode.profile_KeepAlive:
+                OperationManager.instance()?.dequeue(operation: ConcurrentOperation())
+                break
+            case GSProtocolMessageType.subCode.profile_login:
+                OperationManager.instance()?.dequeue(operation: ConcurrentOperation())
+                break
+            default:
+                break
+            }
+        default:
+            break
+        }
+>>>>>>> 87f0da7ed5e47fb7ae8fce0053aeaa04b3ecc3b1
     }
 }
 

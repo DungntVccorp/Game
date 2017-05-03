@@ -12,7 +12,11 @@ import Socket
 protocol clientSocketDelegate {
     func clientDidDisconect(client : TcpClient)
     func clientUnknowError(client: TcpClient,err : Error)
+<<<<<<< HEAD
     func didReceiveMessage(msg : GSMessage,client : TcpClient)
+=======
+    func didReceiveRequest(_ message : GSProtocolMessage)
+>>>>>>> 87f0da7ed5e47fb7ae8fce0053aeaa04b3ecc3b1
 }
 
 class TcpClient {
@@ -42,6 +46,7 @@ class TcpClient {
                     let bytesRead = try self.socket.read(into: &readData)
                     if(bytesRead > 0){
                         debugPrint("Did Read \(bytesRead) byte form client \(self.socket.socketfd)")
+<<<<<<< HEAD
                         do{
                             var next = true
                             while next{
@@ -59,6 +64,15 @@ class TcpClient {
                         }catch{
                             debugPrint("\(error.localizedDescription)")
                         }
+=======
+                        
+//                        let data = Data(bytes: [238, 238, 0, 18, 5])
+//                        let bb = try GSProtocolMessage(rawData: data)
+//                        if(self.delegate != nil){
+//                            self.delegate.didReceiveRequest(bb)
+//                        }
+                        
+>>>>>>> 87f0da7ed5e47fb7ae8fce0053aeaa04b3ecc3b1
                     }
                     if bytesRead == 0{
                         shouldKeepRunning = false
