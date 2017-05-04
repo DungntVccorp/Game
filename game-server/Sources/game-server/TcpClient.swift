@@ -20,8 +20,7 @@ protocol clientSocketDelegate {
 class TcpClient {
     
     var socket : Socket!
-    
-    private let queue = DispatchQueue(label: UUID().uuidString)
+    private let queue = DispatchQueue(label:UUID().uuidString)
     private let bufferSize = 4096
     var delegate : clientSocketDelegate!
     init() {}
@@ -31,6 +30,7 @@ class TcpClient {
         if(delegate != nil){
             self.delegate = delegate
         }
+
         self.run()
     }
     
@@ -64,8 +64,6 @@ class TcpClient {
                                 Log.error("\(error.localizedDescription)")
                             }
                         }
-                        
-                        
                     }
                     if bytesRead == 0{
                         shouldKeepRunning = false
@@ -83,6 +81,11 @@ class TcpClient {
                 }
             }
         }
+    }
+    
+    
+    func onTimeOut(){
+        
     }
     
     func sendMessage(_ data : Data) throws -> Int{
