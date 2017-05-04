@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import Dispatch
 protocol ConcurrentOperationDelegate {
     func finishOperation(_ type : Int,_ replyMsg : GSProtocolMessage?,_ client : TcpClient)
 }
