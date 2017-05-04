@@ -5,7 +5,6 @@
 //  Created by Nguyen Dung on 5/3/17.
 //
 //
-import Proto
 class OperationKeepAlive : ConcurrentOperation{
     
     override func TcpExcute() -> (Int, replyMsg: GSProtocolMessage?) {
