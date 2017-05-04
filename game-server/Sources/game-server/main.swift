@@ -1,5 +1,11 @@
 import Foundation
-import SwiftRedis
+
+import HeliumLogger
+import LoggerAPI
+
+/// CONFIG LOG
+
+HeliumLogger.use()
 
 GameEngine.sharedInstance.registerComponent(component: OperationManager())
 GameEngine.sharedInstance.registerComponent(component: DatabaseManager())
@@ -8,5 +14,5 @@ do{
     try GameEngine.sharedInstance.startEngine()
     RunLoop.current.run()
 }catch{
-    debugPrint(error.localizedDescription)
+    Log.error(error.localizedDescription)
 }

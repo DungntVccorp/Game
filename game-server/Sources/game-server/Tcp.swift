@@ -10,7 +10,7 @@ import Foundation
 import Socket
 import Config
 import Dispatch
-
+import LoggerAPI
 public enum TcpError : Error {
     case Unable_to_unwrap_socket
 }
@@ -44,16 +44,16 @@ class Tcp {
                 self.tcpSocket = try Socket.create(family: Socket.ProtocolFamily.inet, type: Socket.SocketType.stream, proto: Socket.SocketProtocol.tcp)
                 
                 try self.tcpSocket.listen(on: ConfigManager.sharedInstance.getTcpPort, maxBacklogSize: 500)
-                debugPrint("Listening on port: \(self.tcpSocket.listeningPort)")
+                Log.info("Listening on port: \(self.tcpSocket.listeningPort)")
                 repeat{
                     let newClientConnect = try self.tcpSocket.acceptClientConnection()
                     let client  = TcpClient(client: newClientConnect,delegate: self.parentController)
                     self.parentController.clientDidConnect(client)
-                    debugPrint("Client \(client.socket.socketfd) Did Connect")
+                    Log.info("Client \(client.socket.socketfd) Did Connect")
                 }while self.isContinueRunning
             }
             catch {
-                debugPrint(error.localizedDescription)
+                Log.error(error.localizedDescription)
             }
         }
         dispatchMain()

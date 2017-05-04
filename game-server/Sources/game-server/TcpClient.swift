@@ -9,6 +9,8 @@
 import Foundation
 import Socket
 import Dispatch
+import LoggerAPI
+
 protocol clientSocketDelegate {
     func clientDidDisconect(client : TcpClient)
     func clientUnknowError(client: TcpClient,err : Error)
@@ -41,7 +43,7 @@ class TcpClient {
                 repeat {
                     let bytesRead = try self.socket.read(into: &bufferData)
                     if(bytesRead > 0){
-                        debugPrint("Did Read \(bytesRead) byte form client \(self.socket.socketfd)")
+                        Log.info("Did Read \(bytesRead) byte form client \(self.socket.socketfd)")
                         var next = true
                         while next
                         {
@@ -59,7 +61,7 @@ class TcpClient {
                             }catch{
                                 next = false
                                 bufferData.count = 0
-                                debugPrint("\(error.localizedDescription)")
+                                Log.error("\(error.localizedDescription)")
                             }
                         }
                         
@@ -70,12 +72,12 @@ class TcpClient {
                     }
                 }while shouldKeepRunning
                 bufferData.count = 0
-                debugPrint("Client \(self.socket.socketfd) Did Disconect")
+                Log.info("Client \(self.socket.socketfd) Did Disconect")
                 if(self.delegate != nil){
                     self.delegate.clientDidDisconect(client: self)
                 }
             }catch{
-                debugPrint(error.localizedDescription)
+                Log.error(error.localizedDescription)
                 if(self.delegate != nil){
                     self.delegate.clientUnknowError(client: self, err: error)
                 }
@@ -96,6 +98,6 @@ class TcpClient {
     }
     
     deinit{
-        debugPrint("deinit client")
+        Log.info("deinit client")
     }
 }

@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import LoggerAPI
 
 public class GameServer : Component,clientSocketDelegate,ConcurrentOperationDelegate{
     
@@ -82,9 +82,9 @@ public class GameServer : Component,clientSocketDelegate,ConcurrentOperationDele
         do{
             guard let data = try replyMsg?.data() else { return }
             totalByteSend = totalByteSend + (try client.sendMessage(data))
-            debugPrint("\(totalByteSend / 1024) Kb")
+            Log.info("\(totalByteSend / 1024) Kb")
         }catch{
-            debugPrint(error.localizedDescription)
+            Log.error(error.localizedDescription)
         }
     }
 }

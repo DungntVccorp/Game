@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import LoggerAPI
 protocol ConcurrentOperationDelegate {
     func finishOperation(_ type : Int,_ replyMsg : GSProtocolMessage?,_ client : TcpClient)
 }
@@ -94,7 +95,7 @@ open class ConcurrentOperation :  Operation{
             state = .finished
         }else{
             state = .executing
-            debugPrint("Run OP \(excuteMessage.headCodeId) : \(excuteMessage.subCodeId)")
+            Log.info("Run OP \(excuteMessage.headCodeId) : \(excuteMessage.subCodeId)")
             let ex = self.TcpExcute()
             if(self.delegate != nil){
                 self.delegate.finishOperation(ex.0,ex.1,self.clientExcute)
@@ -105,6 +106,6 @@ open class ConcurrentOperation :  Operation{
         
     }
     deinit {
-        debugPrint("Finish Operation")
+        Log.info("Finish Operation")
     }
 }

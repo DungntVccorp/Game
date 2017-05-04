@@ -9,7 +9,7 @@
 import Foundation
 import SwiftRedis
 import Config
-
+import LoggerAPI
 public enum dbError : Error{
     case invalid_config
     case password_invalid
@@ -40,14 +40,14 @@ class DatabaseManager : Component{
     override public func start() throws {
         database.connect(host: ConfigManager.sharedInstance.dbHost, port: Int32(ConfigManager.sharedInstance.dbPort)) { (err) in
             if(err != nil){
-                debugPrint(err?.localizedDescription ?? "")
+                Log.error(err?.localizedDescription ?? "")
             }else{
                 database.auth(ConfigManager.sharedInstance.dbPassword, callback: { (err) in
                     if(err != nil){
-                        debugPrint(err?.localizedDescription ?? "")
+                        Log.error(err?.localizedDescription ?? "")
                     }else{
                         self.isReady = true
-                        debugPrint("Database Connected")
+                        Log.info("Database Connected")
                     }
                 })
             }
