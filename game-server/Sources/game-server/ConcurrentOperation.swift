@@ -8,6 +8,17 @@
 
 import Foundation
 import LoggerAPI
+
+public extension NSLock {
+    
+    func criticalScope<T>(closure: (Void) -> T) -> T {
+        lock()
+        let value = closure()
+        unlock()
+        return value
+    }
+}
+
 protocol ConcurrentOperationDelegate {
     func finishOperation(_ type : Int,_ replyMsg : GSProtocolMessage?,_ client : TcpClient)
 }
@@ -30,16 +41,20 @@ open class ConcurrentOperation :  Operation{
             }
         }
     }
-    
+    private let _stateLock : NSLock = NSLock()
     var state: State {
         willSet {
-            willChangeValue(forKey: newValue.asKeyPath())
-            willChangeValue(forKey: state.asKeyPath())
+//            let _ = _stateLock.criticalScope {
+//                willChangeValue(forKey: newValue.asKeyPath())
+//                willChangeValue(forKey: state.asKeyPath())
+//            }
         }
         
         didSet {
-            didChangeValue(forKey: oldValue.asKeyPath())
-            didChangeValue(forKey: state.asKeyPath())
+//            let _ = _stateLock.criticalScope {
+//                didChangeValue(forKey: oldValue.asKeyPath())
+//                didChangeValue(forKey: state.asKeyPath())
+//            }
         }
     }
     

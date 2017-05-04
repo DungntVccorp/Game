@@ -11,6 +11,8 @@ let package = Package(
         .Package(url: "https://github.com/IBM-Swift/Kitura-redis.git", Version(1,7,0)),
         .Package(url: "https://github.com/1024jp/GzipSwift.git", Version(3,1,4)),
         .Package(url: "https://github.com/IBM-Swift/HeliumLogger.git", Version(1,7,0)),
+        .Package(url: "https://github.com/dcilia/swift-executor.git", Version(1,5,5)),
+        
         
         ]
 )
