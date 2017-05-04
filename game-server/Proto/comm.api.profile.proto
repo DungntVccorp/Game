@@ -1,0 +1,10 @@
+syntax = "proto3";
+import "comm.model.proto";
+package Pcomm;
+
+message KeepAlive{
+	message Request{}
+	message Reply{
+		ProtocolReply apiReply = 1;
+	}
+}
