@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Dispatch
 public class SynchronizedArray<T> {
     
     private var array: Array<T> = Array<T>()

@@ -8,7 +8,7 @@
 
 import Foundation
 import Socket
-
+import Dispatch
 protocol clientSocketDelegate {
     func clientDidDisconect(client : TcpClient)
     func clientUnknowError(client: TcpClient,err : Error)
