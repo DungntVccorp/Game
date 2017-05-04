@@ -82,7 +82,7 @@ public class GameServer : Component,clientSocketDelegate,ConcurrentOperationDele
         do{
             guard let data = try replyMsg?.data() else { return }
             totalByteSend = totalByteSend + (try client.sendMessage(data))
-            debugPrint("\(totalByteSend / 1024)Kb")
+            debugPrint("\(totalByteSend / 1024) Kb")
         }catch{
             debugPrint(error.localizedDescription)
         }
