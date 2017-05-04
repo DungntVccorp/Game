@@ -1,0 +1,58 @@
+{
+  "object": {
+    "autoPin": true,
+    "pins": [
+      {
+        "package": "Gzip",
+        "reason": null,
+        "repositoryURL": "https://github.com/1024jp/GzipSwift.git",
+        "state": {
+          "branch": null,
+          "revision": "abd302dbad541a852539419ca215ccfcdabdd478",
+          "version": "3.1.4"
+        }
+      },
+      {
+        "package": "Socket",
+        "reason": null,
+        "repositoryURL": "https://github.com/IBM-Swift/BlueSocket.git",
+        "state": {
+          "branch": null,
+          "revision": "1e15729a458e9060be8b675fc3eb51c8378755f1",
+          "version": "0.12.45"
+        }
+      },
+      {
+        "package": "SwiftProtobuf",
+        "reason": null,
+        "repositoryURL": "https://github.com/apple/swift-protobuf.git",
+        "state": {
+          "branch": null,
+          "revision": "1cfc33cf04cd9368a695d8b72c891f9db2fe1b65",
+          "version": "0.9.901"
+        }
+      },
+      {
+        "package": "SwiftRedis",
+        "reason": null,
+        "repositoryURL": "https://github.com/IBM-Swift/Kitura-redis.git",
+        "state": {
+          "branch": null,
+          "revision": "38b2397b4cea6fa173425fecc4155ab196149b14",
+          "version": "1.7.0"
+        }
+      },
+      {
+        "package": "zlib",
+        "reason": null,
+        "repositoryURL": "https://github.com/1024jp/zlib.git",
+        "state": {
+          "branch": null,
+          "revision": "f0aac43faf68c2e8e1786e2f3d7a36660a7be501",
+          "version": "0.0.1"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

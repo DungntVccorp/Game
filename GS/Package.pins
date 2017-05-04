@@ -1,0 +1,48 @@
+{
+  "object": {
+    "autoPin": true,
+    "pins": [
+      {
+        "package": "HeliumLogger",
+        "reason": null,
+        "repositoryURL": "https://github.com/IBM-Swift/HeliumLogger.git",
+        "state": {
+          "branch": null,
+          "revision": "2bcf8944ed37ecb6db30cc30e7befbaa7cc96283",
+          "version": "1.4.0"
+        }
+      },
+      {
+        "package": "LoggerAPI",
+        "reason": null,
+        "repositoryURL": "https://github.com/IBM-Swift/LoggerAPI.git",
+        "state": {
+          "branch": null,
+          "revision": "7a2cb4fdd7df7eb9c2f8a967c07f2d6c2fb4c9c4",
+          "version": "1.4.0"
+        }
+      },
+      {
+        "package": "Socket",
+        "reason": null,
+        "repositoryURL": "https://github.com/IBM-Swift/BlueSocket",
+        "state": {
+          "branch": null,
+          "revision": "3689832fd190f1991459c5bc12e370d73bfc9677",
+          "version": "0.12.16"
+        }
+      },
+      {
+        "package": "SwiftProtobuf",
+        "reason": null,
+        "repositoryURL": "https://github.com/apple/swift-protobuf.git",
+        "state": {
+          "branch": null,
+          "revision": "e4f4beb6e162bb1ccb7cf00477c01a761c86066c",
+          "version": "0.9.24"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
