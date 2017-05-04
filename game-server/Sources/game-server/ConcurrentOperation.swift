@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Dispatch
 protocol ConcurrentOperationDelegate {
     func finishOperation(_ type : Int,_ replyMsg : GSProtocolMessage?,_ client : TcpClient)
 }
@@ -33,13 +32,13 @@ open class ConcurrentOperation :  Operation{
     
     var state: State {
         willSet {
-            willChangeValue(forKey: newValue.asKeyPath())
-            willChangeValue(forKey: state.asKeyPath())
+            //willChangeValue(forKey: newValue.asKeyPath())
+            //willChangeValue(forKey: state.asKeyPath())
         }
         
         didSet {
-            didChangeValue(forKey: oldValue.asKeyPath())
-            didChangeValue(forKey: state.asKeyPath())
+            //didChangeValue(forKey: oldValue.asKeyPath())
+            //didChangeValue(forKey: state.asKeyPath())
         }
     }
     
