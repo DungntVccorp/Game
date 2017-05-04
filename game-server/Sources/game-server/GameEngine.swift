@@ -18,34 +18,35 @@ public class GameEngine{
     private var listComponent : SynchronizedArray = SynchronizedArray<Component>()
     
     public func registerComponent(component : Component){
-        listComponent.append(newElement: component)
+        listComponent.append(component)
     }
     
     public func getComponent(_ type : ComponentType) -> Component?{
-        for c in (listComponent.allObject() ?? []){
-            if(c.ComponentType() == type){
-                return c
-            }
+        let l = listComponent.filter { (c : Component) -> Bool in
+            return c.ComponentType() == type
         }
-        return nil
+        if(l.count == 1){
+            return l.first
+        }else{
+            return nil
+        }
     }
     
     public func startEngine() throws {
         //for com in listComponent
         do{
-            for component in (listComponent.allObject() ?? []).sorted(by: { (c1, c2) -> Bool in
+            
+            for component in listComponent.sorted(by: { (c1, c2) -> Bool in
                 return c1.priority() < c2.priority()
             }){
                 try component.loadConfig()
                 try component.start()
             }
-            
-            for c in (listComponent.allObject() ?? []){
-                if(c.ComponentType() == .GS){
-                    tcp = Tcp(c as! GameServer)
-                    tcp.startTcp()
-                    break
-                }
+            if let gs = listComponent.first(where: { (c : Component) -> Bool in
+                return c.ComponentType() == .GS
+            }) as? GameServer{
+                tcp = Tcp(gs)
+                tcp.startTcp()
             }
         }catch{
             throw error

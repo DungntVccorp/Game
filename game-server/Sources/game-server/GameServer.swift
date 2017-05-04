@@ -34,31 +34,19 @@ public class GameServer : Component,clientSocketDelegate,ConcurrentOperationDele
     //MARK: -  CLIENT DID CONNECT
     
     func clientDidConnect( _ tcpClient : TcpClient){
-        listConnection.append(newElement: tcpClient)
+        listConnection.append(tcpClient)
     }
     
     //MARK: - 🔌 clientSocketDelegate Method
     func clientDidDisconect(client: TcpClient) {
-        guard let listConnect = listConnection.allObject() else { return }
-        var index : Int = 0
-        for c in listConnect{
-            if(c.socket.socketfd == client.socket.socketfd){
-                self.listConnection.removeAtIndex(index: index)
-                break
-            }
-            index = index + 1
-        }
+        listConnection.remove(where: { (c : TcpClient) -> Bool in
+            return c.socket.socketfd == client.socket.socketfd
+        }, completion: nil)
     }
     func clientUnknowError(client: TcpClient, err: Error) {
-        guard let listConnect = listConnection.allObject() else { return }
-        var index : Int = 0
-        for c in listConnect{
-            if(c.socket.socketfd == client.socket.socketfd){
-                listConnection.removeAtIndex(index: index)
-                break
-            }
-            index = index + 1
-        }
+        listConnection.remove(where: { (c : TcpClient) -> Bool in
+            return c.socket.socketfd == client.socket.socketfd
+        }, completion: nil)
     }
     func didReceiveMessage(msg: GSProtocolMessage, client: TcpClient) {
         switch msg.headCodeId {
