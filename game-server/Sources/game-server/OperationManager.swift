@@ -20,7 +20,7 @@ class OperationManager : Component{
     }
     
     override public func loadConfig() throws {
-        operationQueue.maxConcurrentOperationCount = 10//OperationQueue.defaultMaxConcurrentOperationCount
+        operationQueue.maxConcurrentOperationCount = OperationQueue.defaultMaxConcurrentOperationCount
         operationQueue.qualityOfService = .default
         
     }

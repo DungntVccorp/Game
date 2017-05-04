@@ -33,13 +33,13 @@ open class ConcurrentOperation :  Operation{
     
     var state: State {
         willSet {
-            //willChangeValue(forKey: newValue.asKeyPath())
-            //willChangeValue(forKey: state.asKeyPath())
+            willChangeValue(forKey: newValue.asKeyPath())
+            willChangeValue(forKey: state.asKeyPath())
         }
         
         didSet {
-            //didChangeValue(forKey: oldValue.asKeyPath())
-            //didChangeValue(forKey: state.asKeyPath())
+            didChangeValue(forKey: oldValue.asKeyPath())
+            didChangeValue(forKey: state.asKeyPath())
         }
     }
     
@@ -92,15 +92,15 @@ open class ConcurrentOperation :  Operation{
     
     override open func main() {
         if self.isCancelled {
-            //state = .finished
+            state = .finished
         }else{
-            //state = .executing
+            state = .executing
             Log.info("Run OP \(excuteMessage.headCodeId) : \(excuteMessage.subCodeId)")
             let ex = self.TcpExcute()
             if(self.delegate != nil){
                 self.delegate.finishOperation(ex.0,ex.1,self.clientExcute)
             }
-            //state = .finished
+            state = .finished
 
         }
         
