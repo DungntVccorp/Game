@@ -92,9 +92,9 @@ open class ConcurrentOperation :  Operation{
     
     override open func main() {
         if self.isCancelled {
-            state = .finished
+            //state = .finished
         }else{
-            state = .executing
+            //state = .executing
             Log.info("Run OP \(excuteMessage.headCodeId) : \(excuteMessage.subCodeId)")
             let ex = self.TcpExcute()
             if(self.delegate != nil){
