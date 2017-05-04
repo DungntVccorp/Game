@@ -21,7 +21,7 @@ class TcpClient {
     
     var socket : Socket!
     
-    private let queue = DispatchQueue.global(qos: .default)
+    private let queue = DispatchQueue(label: UUID().uuidString)
     private let bufferSize = 4096
     var delegate : clientSocketDelegate!
     init() {}
