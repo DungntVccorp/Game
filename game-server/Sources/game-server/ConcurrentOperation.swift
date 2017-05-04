@@ -100,7 +100,7 @@ open class ConcurrentOperation :  Operation{
             if(self.delegate != nil){
                 self.delegate.finishOperation(ex.0,ex.1,self.clientExcute)
             }
-            state = .finished
+            //state = .finished
 
         }
         
